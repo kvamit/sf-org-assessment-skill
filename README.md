@@ -54,12 +54,6 @@ Restart Claude Code, then run `/running-org-assessment` — it should appear in 
 
 > **Note:** The skill references artifact paths under `docs/org-assessment/` relative to the project root. When used globally, ensure those paths exist in the project you are assessing, or provide absolute paths when prompted.
 
-**Required artifact locations** (provide at least one):
-- `docs/org-assessment/findings/Org Check Rules.xlsx` — OrgCheck violation data
-- `docs/org-assessment/findings/DATA MODEL/CustomFields.xlsx` — field inventory
-- `docs/org-assessment/findings/PROGRAMMATIC/Apex Classes Analysis.docx` — Apex evidence
-- `docs/org-assessment/findings-review/` — markdown draft files (written by the skill during Phase 2)
-
 **Output location:**
 - `docs/org-assessment/[org-name]-OrgAssessment-Report.html` — cumulative live report
 
