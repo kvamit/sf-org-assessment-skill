@@ -52,8 +52,6 @@ cp -r path/to/running-org-assessment ~/.claude/commands/running-org-assessment
 
 Restart Claude Code, then run `/running-org-assessment` — it should appear in tab-completion from any project.
 
-> **Note:** The skill references artifact paths under `docs/org-assessment/` relative to the project root. When used globally, ensure those paths exist in the project you are assessing, or provide absolute paths when prompted.
-
 **Output location:**
 - `docs/org-assessment/[org-name]-OrgAssessment-Report.html` — cumulative live report
 
