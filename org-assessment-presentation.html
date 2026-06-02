@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Org Assessment Skill</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0f0f0f; color: #f0f0f0; }
+
+  .slide { display: none; width: 100vw; min-height: 100vh; padding: 56px 80px; flex-direction: column; justify-content: center; }
+  .slide.active { display: flex; }
+
+  .label { font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #f59e0b; margin-bottom: 16px; }
+  h1 { font-size: 48px; font-weight: 800; line-height: 1.1; margin-bottom: 12px; }
+  h1 span { color: #f59e0b; }
+  .subtitle { font-size: 17px; color: #888; margin-bottom: 40px; }
+
+  /* ── Slide 1 ── */
+  .top-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 960px; margin-bottom: 16px; }
+  .card { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 12px; padding: 20px 24px; }
+  .card.gold { border-color: #f59e0b; background: #1c1800; }
+  .card .icon { font-size: 20px; margin-bottom: 10px; }
+  .card h3 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .card p { font-size: 13px; color: #888; line-height: 1.5; }
+  .card code { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 11px; color: #fcd34d; }
+
+  .domains-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; max-width: 960px; margin-bottom: 20px; }
+  .domain-pill { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 8px; padding: 12px 10px; text-align: center; }
+  .domain-pill .code { font-size: 14px; font-weight: 800; color: #f59e0b; margin-bottom: 4px; }
+  .domain-pill .name { font-size: 10px; color: #666; line-height: 1.3; }
+
+  .invoke-box { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 12px; padding: 18px 28px; max-width: 960px; display: flex; align-items: center; gap: 20px; }
+  .invoke-box code { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 20px; color: #fcd34d; font-weight: 700; }
+  .invoke-box p { font-size: 13px; color: #666; }
+
+  /* ── Slide 2 ── */
+  .phases { display: flex; align-items: flex-start; gap: 0; max-width: 960px; margin-bottom: 28px; }
+  .phase { flex: 1; background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 12px; padding: 20px; }
+  .phase-arrow { display: flex; align-items: center; justify-content: center; padding: 0 10px; color: #444; font-size: 18px; padding-top: 24px; }
+  .phase-num { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #f59e0b; margin-bottom: 6px; }
+  .phase h3 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .phase p { font-size: 12px; color: #888; line-height: 1.5; }
+  .phase .gate { margin-top: 12px; font-size: 11px; color: #555; border-top: 1px solid #2a2a2a; padding-top: 8px; font-style: italic; }
+
+  .rubric-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; max-width: 960px; margin-bottom: 20px; }
+  .rubric-card { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 8px; padding: 14px 16px; }
+  .rubric-card .dim { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #f59e0b; margin-bottom: 6px; }
+  .rubric-card p { font-size: 12px; color: #888; line-height: 1.4; }
+  .rubric-card .pills { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 8px; }
+  .pill { font-size: 10px; border-radius: 4px; padding: 2px 7px; font-weight: 600; }
+  .pill.red { background: #3b0000; color: #f87171; }
+  .pill.yellow { background: #2d2000; color: #fbbf24; }
+  .pill.green { background: #002d1a; color: #34d399; }
+
+  .output-meta { max-width: 960px; display: flex; gap: 12px; flex-wrap: wrap; }
+  .meta-pill { background: #1c1800; border: 1px solid #f59e0b; border-radius: 6px; padding: 7px 14px; font-size: 12px; color: #fcd34d; }
+
+  /* Navigation */
+  nav { position: fixed; bottom: 28px; right: 44px; display: flex; gap: 12px; align-items: center; }
+  .nav-btn { background: #1a1a1a; border: 1px solid #2a2a2a; color: #888; border-radius: 8px; padding: 9px 18px; font-size: 13px; cursor: pointer; transition: all 0.15s; }
+  .nav-btn:hover { border-color: #f59e0b; color: #f0f0f0; }
+  .nav-btn:disabled { opacity: 0.3; cursor: default; }
+  .slide-counter { font-size: 13px; color: #444; }
+</style>
+</head>
+<body>
+
+<!-- Slide 1: What, When & Taxonomy -->
+<section class="slide active" id="slide-1">
+  <div class="label">Claude Code Custom Skill</div>
+  <h1>The <span>/running-org-assessment</span><br>Skill</h1>
+  <p class="subtitle">CTA-level Salesforce org assessment — ingest scan artifacts, produce a scored HTML report with human review gates</p>
+
+  <div class="top-row">
+    <div class="card gold">
+      <div class="icon">✅</div>
+      <h3>Trigger when…</h3>
+      <p>User asks to assess a Salesforce org domain · says "org assessment" · cites a sub-domain code (DM-01, PS-05…) · shares OrgCheck, Code Analyzer, Splunk, or metadata inventory artifacts</p>
+    </div>
+    <div class="card">
+      <div class="icon">🚫</div>
+      <h3>Don't trigger for…</h3>
+      <p>Pure gap analysis without org artifacts → use <code>/gap-analysis</code><br>Single diagram → use <code>generating-mermaid-diagrams</code><br>Targeted code fix → use <code>generating-*</code></p>
+    </div>
+  </div>
+
+  <div class="domains-row">
+    <div class="domain-pill"><div class="code">DM</div><div class="name">Data Management</div></div>
+    <div class="domain-pill"><div class="code">SV</div><div class="name">Security &amp; Visibility</div></div>
+    <div class="domain-pill"><div class="code">IA</div><div class="name">Integration Architecture</div></div>
+    <div class="domain-pill"><div class="code">PS</div><div class="name">Performance &amp; Scalability</div></div>
+    <div class="domain-pill"><div class="code">CD</div><div class="name">Configuration &amp; Development</div></div>
+    <div class="domain-pill"><div class="code">SG</div><div class="name">Strategy &amp; Governance</div></div>
+  </div>
+
+  <div class="invoke-box">
+    <code>/running-org-assessment</code>
+    <p>Available in this repo via <code style="font-family:'SF Mono',monospace;font-size:12px;color:#fcd34d">.agents/skills/</code> symlink · or copy to <code style="font-family:'SF Mono',monospace;font-size:12px;color:#fcd34d">~/.claude/commands/</code> for global access</p>
+  </div>
+</section>
+
+<!-- Slide 2: Phase flow + Rubric -->
+<section class="slide" id="slide-2">
+  <div class="label">Phase Flow &amp; Scoring Rubric</div>
+  <h1>Four gated phases,<br>one <span>cumulative HTML</span> report</h1>
+  <p class="subtitle">Every observation must cite a real artifact — no invented findings. Human approval required before HTML is generated.</p>
+
+  <div class="phases">
+    <div class="phase">
+      <div class="phase-num">Phase 0</div>
+      <h3>Scope</h3>
+      <p>Select domains then sub-domains in a two-step conversation. Present scope summary for confirmation.</p>
+      <div class="gate">✋ User replies "confirmed"</div>
+    </div>
+    <div class="phase-arrow">→</div>
+    <div class="phase">
+      <div class="phase-num">Phase 1</div>
+      <h3>Ingest</h3>
+      <p>Read OrgCheck, Code Analyzer, Splunk, and metadata artifacts. Extract concrete signals — names, counts, metric values only.</p>
+    </div>
+    <div class="phase-arrow">→</div>
+    <div class="phase">
+      <div class="phase-num">Phase 2</div>
+      <h3>Draft Findings</h3>
+      <p>Write observations to <code style="color:#fcd34d;font-size:11px">findings-review/[SUB-CODE].md</code>. Offers Revise / Append / Replace if draft exists.</p>
+      <div class="gate">✋ User replies "approved"</div>
+    </div>
+    <div class="phase-arrow">→</div>
+    <div class="phase">
+      <div class="phase-num">Phase 3</div>
+      <h3>HTML Report</h3>
+      <p>Re-reads approved markdown. Adds or replaces only new panels — existing sub-domain panels are preserved.</p>
+      <div class="gate">📄 <code style="color:#fcd34d;font-size:10px">[org-name]-OrgAssessment-Report.html</code></div>
+    </div>
+  </div>
+
+  <div class="rubric-row">
+    <div class="rubric-card">
+      <div class="dim">Risk</div>
+      <p>Risk to the org if no action is taken</p>
+      <div class="pills">
+        <span class="pill red">High</span>
+        <span class="pill yellow">Medium</span>
+        <span class="pill green">Low</span>
+      </div>
+    </div>
+    <div class="rubric-card">
+      <div class="dim">Value</div>
+      <p>Business or technical gain from the recommendation</p>
+      <div class="pills">
+        <span class="pill red">High</span>
+        <span class="pill yellow">Medium</span>
+        <span class="pill green">Low</span>
+      </div>
+    </div>
+    <div class="rubric-card">
+      <div class="dim">Effort</div>
+      <p>Degree of effort to implement</p>
+      <div class="pills">
+        <span class="pill red">High</span>
+        <span class="pill yellow">Medium</span>
+        <span class="pill green">Low</span>
+      </div>
+    </div>
+    <div class="rubric-card">
+      <div class="dim">Priority</div>
+      <p>Derived from Risk × Value — not independently set</p>
+      <div class="pills">
+        <span class="pill red">High</span>
+        <span class="pill yellow">Medium</span>
+        <span class="pill green">Low</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="output-meta">
+    <div class="meta-pill">Cumulative — new panels added, old preserved</div>
+    <div class="meta-pill">Opens from file:// — no CDN required</div>
+    <div class="meta-pill">Domain tabs → sub-domain sub-tabs → observation cards</div>
+    <div class="meta-pill">Timeline tags: [ST] Short Term · [LT] Long Term</div>
+  </div>
+</section>
+
+<nav>
+  <button class="nav-btn" id="prev-btn" onclick="navigate(-1)" disabled>← Prev</button>
+  <span class="slide-counter" id="counter">1 / 2</span>
+  <button class="nav-btn" id="next-btn" onclick="navigate(1)">Next →</button>
+</nav>
+
+<script>
+  let current = 1;
+  const total = 2;
+  function navigate(dir) {
+    document.getElementById('slide-' + current).classList.remove('active');
+    current = Math.max(1, Math.min(total, current + dir));
+    document.getElementById('slide-' + current).classList.add('active');
+    document.getElementById('counter').textContent = current + ' / ' + total;
+    document.getElementById('prev-btn').disabled = current === 1;
+    document.getElementById('next-btn').disabled = current === total;
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') navigate(-1);
+  });
+</script>
+</body>
+</html>
