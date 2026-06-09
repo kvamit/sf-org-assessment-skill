@@ -179,3 +179,9 @@ Every observation card is scored on four dimensions. Timeline tags: `[ST]` Short
 - [rubric.md](rubric.md) — Risk/Value/Effort/Priority definitions and HTML pill colours
 - [phases.md](phases.md) — Phase 0–3 step-by-step execution, markdown draft template, quality rules
 - [html-design.md](html-design.md) — HTML design system: layout, CSS, JS, observation card template
+
+## Tips
+
+- **Richer issues table** — paste the raw issue list as bullets
+- **Long content** — generate one tab at a time, then ask to assemble
+- **Markdown format** — convert your documents to .md file to save on token size
